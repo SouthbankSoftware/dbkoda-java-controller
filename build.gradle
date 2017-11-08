@@ -7,13 +7,17 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+
+}
+
 
 jar {
     baseName = 'dbkoda-java-controller'
-    version =  '0.1.0'
+    version = '0.1.0'
 }
 
 repositories {
@@ -23,13 +27,31 @@ repositories {
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
+project.ext {
+    SwaggerVersion = '2.7.0'
+    DrillJDBCVersion = '1.11.0'
+}
+
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.security:spring-security-web")
     compile("org.springframework.security:spring-security-config")
-    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
-    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: SwaggerVersion
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: SwaggerVersion
+
     testCompile("org.springframework.boot:spring-boot-starter-test")
+
+    compile project(":drill")
 }
 
+subprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+springBoot {
+    executable = true
+}
