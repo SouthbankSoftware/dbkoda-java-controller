@@ -3,8 +3,10 @@ package com.dbkoda.drill.services;
 import com.dbkoda.drill.exceptions.DrillException;
 import com.dbkoda.drill.model.ConnectionProfile;
 import com.dbkoda.drill.utils.DrillLogger;
-import com.google.common.collect.HashBiMap;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -108,6 +110,12 @@ public class DrillService implements DrillLogger {
             e.printStackTrace();
         }
         return data.toString();
+    }
+
+    public Map<String, DrillConnection> getProfiles() {
+        Map ret = new HashMap();
+        this.connectionMap.forEach((k, v) -> ret.put(k, new DrillConnection(null, v.getProfile())));
+        return ret;
     }
 
 }
