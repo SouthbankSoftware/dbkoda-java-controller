@@ -54,4 +54,5 @@ subprojects {
 
 springBoot {
     executable = true
+    layout = "ZIP"
 }

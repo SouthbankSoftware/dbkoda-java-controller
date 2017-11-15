@@ -1,5 +1,5 @@
 dependencies {
-    compile group: 'org.apache.drill.exec', name: 'drill-jdbc-all', version: DrillJDBCVersion
+    compileOnly group: 'org.apache.drill.exec', name: 'drill-jdbc-all', version: DrillJDBCVersion
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.security:spring-security-web")
     compile("org.springframework.security:spring-security-config")
