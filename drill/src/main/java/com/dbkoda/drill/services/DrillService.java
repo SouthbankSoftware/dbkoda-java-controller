@@ -117,12 +117,29 @@ public class DrillService implements DrillLogger {
         }
         DrillConnection connection = this.connectionMap.get(connectionId);
         try {
-            Statement st = connection.getConnection().createStatement();
-            JsonArray jsonData = resultSetToJson(st.executeQuery(sql));
-            JsonObject ret = new JsonObject();
-            ret.add("output", jsonData);
-            info("get executed output " + ret.toString());
-            return ret.toString();
+            String[] split = sql.split("\n");
+            if (split.length == 1) {
+                Statement st = connection.getConnection().createStatement();
+                JsonArray jsonData = resultSetToJson(st.executeQuery(sql));
+                JsonObject ret = new JsonObject();
+                ret.add("output", jsonData);
+                info("get executed output " + ret.toString());
+                return ret.toString();
+            } else {
+                JsonArray array = new JsonArray();
+                for (String cmd : split) {
+                    if (cmd.trim().isEmpty()) {
+                        continue;
+                    }
+                    Statement st = connection.getConnection().createStatement();
+                    JsonArray jsonData = resultSetToJson(st.executeQuery(cmd));
+                    array.add(jsonData);
+                }
+                JsonObject ret = new JsonObject();
+                ret.add("output", array);
+                info("get executed output " + ret.toString());
+                return ret.toString();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DrillException(StatusCode.SQL_EXCEPTION, "Execution Failed: " + e.getMessage(), e);
