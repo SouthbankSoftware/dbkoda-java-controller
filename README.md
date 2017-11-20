@@ -10,4 +10,4 @@ Gradle is used to build this project. Run blow command to do a clean build. It n
 
 ## How to run the application
 
-`./gradlew bootApp`
+`. run.sh`
