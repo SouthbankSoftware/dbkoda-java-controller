@@ -9,5 +9,6 @@ Gradle is used to build this project. Run blow command to do a clean build. It n
 
 
 ## How to run the application
+Make sure set the drill home environment variable `$DRILL_HOME`, then run:
 
 `. run.sh`
