@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -84,4 +85,10 @@ public class DrillController implements DrillLogger {
         return drillService.getProfiles();
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity getStatus() {
+        Map<String, String> results = new HashMap<>();
+        results.put("status", "Running!");
+        return ResponseEntity.ok(results);
+    }
 }
